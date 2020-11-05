@@ -44,15 +44,13 @@ public class TwitterServiceTest {
         Map<Integer, List<Status>> map = twitterService.getDaysToTweetsMap(2);
         Date todaysDate = new Date();
         Date yesterdaysDate = DateUtils.addDays(todaysDate, -1);
-        int dayOfMonth = LocalDateTime.now().getDayOfMonth();
-        int yesterdayOfMonth = LocalDateTime.now().minusDays(1).getDayOfMonth();
 
-        List<Status> tweetsNotFromToday = map.get(dayOfMonth)
+        List<Status> tweetsNotFromToday = map.get(0)
                 .stream()
                 .filter(status -> !DateUtils.isSameDay(status.getCreatedAt(), todaysDate))
                 .collect(Collectors.toList());
 
-        List<Status> tweetsFromYesterday = map.get(yesterdayOfMonth)
+        List<Status> tweetsFromYesterday = map.get(1)
                 .stream()
                 .filter(status -> !DateUtils.isSameDay(status.getCreatedAt(), yesterdaysDate))
                 .collect(Collectors.toList());
