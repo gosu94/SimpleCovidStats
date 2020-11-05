@@ -5,6 +5,7 @@ import com.gosu.simpleCovidStats.model.CovidDay;
 import org.springframework.stereotype.Component;
 import twitter4j.Status;
 
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,7 +24,7 @@ public class CovidDayService {
     public static final String NUMBER_OF_TESTS_PATTERN = "W ciągu doby.*\\s(\\d{1,6},?\\d)";
     public static final String NUMBER_OF_ALL_CASES_PATTERN = "Liczba.*wirusem:\\s(.*)\\/\\d";
     public static final String NUMBER_OF_ALL_DEATHS_PATTERN = "Liczba.*\\/(.*)\\s\\(wsz";
-    public static final String NUMBER_OF_ALL_CASES_ERROR = "Nie znaleziono danych dla liczby wszystkich zarażeń";
+    public static final String NUMBER_OF_ALL_CASES_ERROR = "Nie znaleziono danych dla liczby wszystkich zarażeń\n\n";
     public static final String CANT_FIND_DATA_FOR_DAY_ERROR = "Nie znaleziono danych dla tego dnia";
 
     public CovidDay getACovidDay(List<Status> tweetsOfTheDay) throws Exception {
@@ -119,7 +120,7 @@ public class CovidDayService {
                     covidDay.getDiedByCorrelation(),
                     covidDay.getNumberOfTests());
         } catch (Exception ex) {
-            String dateInProperFormat = Consts.DATA_FORMAT.format(tweetsOfTheDay.get(0).getCreatedAt());
+            String dateInProperFormat = Consts.DATA_FORMAT.format(new Date());
             return getExceptionMessage(dateInProperFormat);
         }
     }

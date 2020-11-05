@@ -20,7 +20,7 @@ public class Consts {
             new SimpleDateFormat("EEEE d MMMM yyyy", Locale.forLanguageTag("pl-PL"));
     public static final int MAX_DAYS = 14;
     public static final int MIN_DAYS = 1;
-    public static final String MZ_TWITTER_ACCOUNT = "MZ_GOV_                        PL";
+    public static final String MZ_TWITTER_ACCOUNT = "MZ_GOV_PL";
     public static final int NUMBER_OF_TWEETS_PER_DAY = 40;
     public static final String MAX_NUMBER_ERROR = "Wybierz liczbe dni z przedziału " + MIN_DAYS + " - " + MAX_DAYS + ".";
 }
