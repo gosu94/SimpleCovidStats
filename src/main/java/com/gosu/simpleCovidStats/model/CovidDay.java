@@ -46,7 +46,6 @@ public class CovidDay {
     }
 
     public static class CovidDayBuilder {
-
         Integer numberOfCases;
         Integer died;
         Integer diedByCorrelation;
@@ -79,7 +78,7 @@ public class CovidDay {
             return this;
         }
 
-        public CovidDayBuilder withNumberOfCases(Map<String, Integer> casesByProvinces) {
+        public CovidDayBuilder withNumberOfCasesByProvince(Map<String, Integer> casesByProvinces) {
             this.casesByProvinces = new HashMap<>(casesByProvinces);
             return this;
         }

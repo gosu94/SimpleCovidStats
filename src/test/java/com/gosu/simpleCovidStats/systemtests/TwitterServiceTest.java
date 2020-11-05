@@ -6,7 +6,6 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import twitter4j.Status;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import static com.gosu.simpleCovidStats.Consts.MZ_TWITTER_ACCOUNT;
+import static com.gosu.simpleCovidStats.Consts.NUMBER_OF_TWEETS_PER_DAY;
+
 @Component
 public class TwitterService {
-
-    private static final String MZ_TWITTER_ACCOUNT = "MZ_GOV_PL";
-    public static final int MAX_NUMBER_OF_TWEETS = 300;
     private static Twitter twitter;
 
     public TwitterService() {
@@ -53,7 +53,7 @@ public class TwitterService {
      * @return map of days to Tweets posted by MZ for given day
      */
     public TreeMap<Integer, List<Status>> getDaysToTweetsMap(int days) {
-        List<Status> allTweets = getAllTweetsFromMZ();
+        List<Status> allTweets = getAllTweetsFromMZ(days);
         LocalDateTime todayAtMidnight = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
 
         TreeMap<Integer, List<Status>> map = new TreeMap<>();
@@ -70,9 +70,9 @@ public class TwitterService {
         return map;
     }
 
-    public List<Status> getAllTweetsFromMZ() {
+    public List<Status> getAllTweetsFromMZ(int days) {
         try {
-            return twitter.getUserTimeline(MZ_TWITTER_ACCOUNT, new Paging(1, MAX_NUMBER_OF_TWEETS));
+            return twitter.getUserTimeline(MZ_TWITTER_ACCOUNT, new Paging(1, days * NUMBER_OF_TWEETS_PER_DAY));
         } catch (TwitterException e) {
             System.out.println("Cannot retrieve MZ timeline with error : " + e.getErrorMessage());
         }

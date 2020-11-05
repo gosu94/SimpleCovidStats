@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CovidDayServiceTest {
-    private static final String ALL_CASES_TWEET = "Mamy 21 629 nowych i potwierdzonych przypadków" +
+    private static final String DAY_CASES_TWEET = "Mamy 21 629 nowych i potwierdzonych przypadków" +
             " zakażenia #koronawirus z województw: mazowieckiego (3416), wielkopolskiego (3082)," +
             " kujawsko-pomorskiego (1954), małopolskiego (1914), śląskiego (1761), łódzkiego (1554)," +
             " lubelskiego (1455), podkarpackiego (1274), pomorskiego (1049),";
@@ -31,6 +31,9 @@ public class CovidDayServiceTest {
     private static final Float NUMBER_OF_TESTS = 67.1f;
     private static final Integer NUMBER_OF_DIRECT_DEATHS = 35;
     private static final Integer NUMBER_OF_INDIRECT_DEATHS = 167;
+    private static final String ALL_CASES_TWEET = "Liczba zakażonych koronawirusem: 466 679/6 842 (wszystkie pozytywne przypadki/w tym osoby zmarłe).";
+    private static final Integer NUMBER_OF_ALL_CASES = 466679;
+    private static final Integer NUMBER_OF_ALL_DEATHS = 6842;
 
     private CovidDayService covidDayService = new CovidDayService();
 
@@ -46,7 +49,7 @@ public class CovidDayServiceTest {
         listOfTweets.add(deathsTweet);
         listOfTweets.add(testsTweet);
 
-        when(allCasesTweet.getText()).thenReturn(ALL_CASES_TWEET);
+        when(allCasesTweet.getText()).thenReturn(DAY_CASES_TWEET);
         when(deathsTweet.getText()).thenReturn(DEATHS_TWEET);
         when(testsTweet.getText()).thenReturn(TESTS_TWEET);
         when(allCasesTweet.getCreatedAt()).thenReturn(today);
@@ -61,6 +64,19 @@ public class CovidDayServiceTest {
     }
 
     @Test
+    public void shouldReturnAllCasesAndAllDeaths() throws Exception {
+        Status allCasesAndDeathsTweet = mock(Status.class);
+
+        List<Status> listOfTweets = new ArrayList<>();
+        listOfTweets.add(allCasesAndDeathsTweet);
+
+        when(allCasesAndDeathsTweet.getText()).thenReturn(ALL_CASES_TWEET);
+
+        assertEquals(covidDayService.getAllCases(listOfTweets), NUMBER_OF_ALL_CASES);
+        assertEquals(covidDayService.getAllDeaths(listOfTweets), NUMBER_OF_ALL_DEATHS);
+    }
+
+    @Test
     public void shouldReturnCovidDayWithDifferentFormattedTweet() throws Exception {
         Status allCasesTweet = mock(Status.class);
         Status deathsTweet = mock(Status.class);
@@ -72,7 +88,7 @@ public class CovidDayServiceTest {
         listOfTweets.add(deathsTweet);
         listOfTweets.add(testTweet);
 
-        when(allCasesTweet.getText()).thenReturn(ALL_CASES_TWEET);
+        when(allCasesTweet.getText()).thenReturn(DAY_CASES_TWEET);
         when(deathsTweet.getText()).thenReturn(DEATHS_TWEET2);
         when(testTweet.getText()).thenReturn(TESTS_TWEET);
         when(allCasesTweet.getCreatedAt()).thenReturn(today);
@@ -111,7 +127,7 @@ public class CovidDayServiceTest {
         listOfTweets.add(allCasesTweet);
         listOfTweets.add(deathsTweet);
 
-        when(allCasesTweet.getText()).thenReturn(ALL_CASES_TWEET);
+        when(allCasesTweet.getText()).thenReturn(DAY_CASES_TWEET);
         when(deathsTweet.getText()).thenReturn("WRONG");
 
         Exception exception = assertThrows(Exception.class, () -> covidDayService.getACovidDay(listOfTweets));
@@ -130,7 +146,7 @@ public class CovidDayServiceTest {
         listOfTweets.add(deathsTweet);
         listOfTweets.add(testsTweet);
 
-        when(allCasesTweet.getText()).thenReturn(ALL_CASES_TWEET);
+        when(allCasesTweet.getText()).thenReturn(DAY_CASES_TWEET);
         when(deathsTweet.getText()).thenReturn(DEATHS_TWEET);
         when(testsTweet.getText()).thenReturn("WRONG");
 

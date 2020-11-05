@@ -21,6 +21,9 @@ public class CovidDayService {
     public static final String DIRECT_DEATHS_PATTERN = "COVID-19\\szmarł.\\s(.*)\\sos.*natomiast";
     public static final String INDIRECT_DEATHS_PATTERN = ".*innymi\\sschorzeniami\\szmarł.\\s(.*)\\sos";
     public static final String NUMBER_OF_TESTS_PATTERN = "W ciągu doby.*\\s(\\d{1,6},?\\d)";
+    public static final String NUMBER_OF_ALL_CASES_PATTERN = "Liczba.*wirusem:\\s(.*)\\/\\d";
+    public static final String NUMBER_OF_ALL_DEATHS_PATTERN = "Liczba.*\\/(.*)\\s\\(wsz";
+    public static final String NUMBER_OF_ALL_CASES_ERROR = "Nie znaleziono danych dla liczby wszystkich zarażeń";
     public static final String CANT_FIND_DATA_FOR_DAY_ERROR = "Nie znaleziono danych dla tego dnia";
 
     public CovidDay getACovidDay(List<Status> tweetsOfTheDay) throws Exception {
@@ -31,6 +34,30 @@ public class CovidDayService {
                 .withNumberOfTests(getNumberOfTests(tweetsOfTheDay))
                 .withDate(tweetsOfTheDay.get(0).getCreatedAt())
                 .build();
+    }
+
+    public Integer getAllCases(List<Status> tweetsOfTheDay) throws Exception {
+        for (Status status : tweetsOfTheDay) {
+            Matcher matcher = Pattern.compile(NUMBER_OF_ALL_CASES_PATTERN).matcher(status.getText());
+            if (matcher.find()) {
+                String trimmedNumberOfCases = matcher.group(1).replaceAll("\\s", "");
+                return Integer.valueOf(trimmedNumberOfCases);
+            }
+        }
+
+        throw new Exception(NUMBER_OF_ALL_CASES_ERROR);
+    }
+
+    public Integer getAllDeaths(List<Status> tweetsOfTheDay) throws Exception {
+        for (Status status : tweetsOfTheDay) {
+            Matcher matcher = Pattern.compile(NUMBER_OF_ALL_DEATHS_PATTERN).matcher(status.getText());
+            if (matcher.find()) {
+                String trimmedNumberOfDeaths = matcher.group(1).replaceAll("\\s", "");
+                return Integer.valueOf(trimmedNumberOfDeaths);
+            }
+        }
+
+        throw new Exception(NUMBER_OF_ALL_CASES_ERROR);
     }
 
     private Integer getNumberOfCases(List<Status> tweetsOfTheDay) throws Exception {

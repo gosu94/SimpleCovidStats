@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
+import static com.gosu.simpleCovidStats.Consts.ALL_CASES_TEMPLATE;
 import static com.gosu.simpleCovidStats.Consts.ASCII_ART_LOGO;
 import static com.gosu.simpleCovidStats.Consts.MAX_DAYS;
 import static com.gosu.simpleCovidStats.Consts.MAX_NUMBER_ERROR;
@@ -34,6 +35,17 @@ public class CovidDayController {
         if (days > MAX_DAYS || days < MIN_DAYS) return stringBuilder.append(MAX_NUMBER_ERROR).toString();
 
         Set<Integer> keys = daysToTweetsMap.keySet();
+        try {
+            stringBuilder.append(
+                    String.format(ALL_CASES_TEMPLATE,
+                            covidDayService.getAllCases(daysToTweetsMap.get(0)),
+                            covidDayService.getAllDeaths(daysToTweetsMap.get(0))
+                    )
+            );
+        } catch (Exception ex) {
+            stringBuilder.append(ex.getMessage());
+        }
+
         for (Integer key : keys) {
             stringBuilder.append(covidDayService.getFilledTemplate(daysToTweetsMap.get(key)));
         }
