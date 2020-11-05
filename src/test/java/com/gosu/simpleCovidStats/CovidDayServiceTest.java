@@ -48,7 +48,7 @@ public class CovidDayServiceTest {
         CovidDay covidDay = covidDayService.getACovidDay(listOfTweets);
 
         assertEquals(covidDay.getNumberOfCases(), ALL_CASES_INT);
-        assertEquals(covidDay.getDied(), DIRECT_DEATHS);
+        assertEquals(covidDay.getDeaths(), DIRECT_DEATHS);
         assertEquals(covidDay.getDiedByCorrelation(), INDIRECT_DEATHS);
         assertEquals(covidDay.getDate(), today);
     }
@@ -70,7 +70,7 @@ public class CovidDayServiceTest {
         CovidDay covidDay = covidDayService.getACovidDay(listOfTweets);
 
         assertEquals(covidDay.getNumberOfCases(), ALL_CASES_INT);
-        assertEquals(covidDay.getDied(), DIRECT_DEATHS);
+        assertEquals(covidDay.getDeaths(), DIRECT_DEATHS);
         assertEquals(covidDay.getDiedByCorrelation(), INDIRECT_DEATHS);
         assertEquals(covidDay.getDate(), today);
     }

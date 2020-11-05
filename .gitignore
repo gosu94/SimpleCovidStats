@@ -1,4 +1,4 @@
-!**/src/main/resources/twitter4j.properties
+resources/twitter4j.properties
 HELP.md
 .gradle
 build/

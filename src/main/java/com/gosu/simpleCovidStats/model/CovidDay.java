@@ -1,17 +1,14 @@
 package com.gosu.simpleCovidStats.model;
 
-import com.gosu.simpleCovidStats.Consts;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class CovidDay {
     Integer numberOfCases;
     Integer died;
     Integer diedByCorrelation;
+    Float numberOfTests;
     Date date;
     Map<String, Integer> casesByProvinces;
 
@@ -19,6 +16,7 @@ public class CovidDay {
         this.numberOfCases = builder.numberOfCases;
         this.died = builder.died;
         this.diedByCorrelation = builder.diedByCorrelation;
+        this.numberOfTests = builder.numberOfTests;
         this.date = builder.date;
         this.casesByProvinces = builder.casesByProvinces;
     }
@@ -27,7 +25,7 @@ public class CovidDay {
         return numberOfCases;
     }
 
-    public Integer getDied() {
+    public Integer getDeaths() {
         return died;
     }
 
@@ -39,18 +37,12 @@ public class CovidDay {
         return casesByProvinces;
     }
 
-    public Date getDate() {
-        return date;
+    public Float getNumberOfTests() {
+        return numberOfTests;
     }
 
-    public String getFilledTemplate() {
-        String dateInProperFormat = Consts.DATA_FORMAT.format(date);
-
-        return dateInProperFormat + "\n" +
-                "------------------------------------" + "\n" +
-                "Wykryte przypadki: " + numberOfCases + "\n" +
-                "Zgony: " + died + "\n" +
-                "Zgony z powodu chorób współistniejących: " + diedByCorrelation + "\n\n\n";
+    public Date getDate() {
+        return date;
     }
 
     public static class CovidDayBuilder {
@@ -58,6 +50,7 @@ public class CovidDay {
         Integer numberOfCases;
         Integer died;
         Integer diedByCorrelation;
+        Float numberOfTests;
         Date date;
         Map<String, Integer> casesByProvinces;
 
@@ -73,6 +66,11 @@ public class CovidDay {
 
         public CovidDayBuilder withIndirectDeaths(Integer diedByCorrelation) {
             this.diedByCorrelation = diedByCorrelation;
+            return this;
+        }
+
+        public CovidDayBuilder withNumberOfTests(Float numberOfTests) {
+            this.numberOfTests = numberOfTests;
             return this;
         }
 

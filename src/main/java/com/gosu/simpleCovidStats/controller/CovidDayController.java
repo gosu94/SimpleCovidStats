@@ -1,7 +1,5 @@
 package com.gosu.simpleCovidStats.controller;
 
-import com.gosu.simpleCovidStats.Consts;
-import com.gosu.simpleCovidStats.model.CovidDay;
 import com.gosu.simpleCovidStats.service.CovidDayService;
 import com.gosu.simpleCovidStats.service.TwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,26 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import twitter4j.Status;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.TreeMap;
+
+import static com.gosu.simpleCovidStats.Consts.ASCII_ART_LOGO;
+import static com.gosu.simpleCovidStats.Consts.MAX_DAYS;
+import static com.gosu.simpleCovidStats.Consts.MAX_NUMBER_ERROR;
+import static com.gosu.simpleCovidStats.Consts.MIN_DAYS;
 
 @Controller
 @ResponseBody
 public class CovidDayController {
-    private static final String ASCII_ART_LOGO = "   _____________\n" +
-            "  / __/ ___/ __/\n" +
-            " _\\ \\/ /___\\ \\  \n" +
-            "/___/\\___/___/  " +
-            "Simple Covid19 Stats\n";
-    public static final int MAX_DAYS = 7;
-    public static final int MIN_DAYS = 1;
-    public static final String MAX_NUMBER_ERROR = "Wybierz liczbe dni z przedziału " + MIN_DAYS + " - " + MAX_DAYS + ".";
-    public static final String CANT_FIND_DATA_FOR_DAY_ERROR = "Nie znaleziono danych dla tego dnia";
-
     @Autowired
     CovidDayService covidDayService;
     @Autowired
@@ -44,19 +34,9 @@ public class CovidDayController {
         if (days > MAX_DAYS || days < MIN_DAYS) return stringBuilder.append(MAX_NUMBER_ERROR).toString();
 
         Set<Integer> keys = daysToTweetsMap.keySet();
-        for (Integer reverseKey : keys) {
-            try {
-                CovidDay covidDay = covidDayService.getACovidDay(daysToTweetsMap.get(reverseKey));
-                stringBuilder.append(covidDay.getFilledTemplate());
-            } catch (Exception ex) {
-                String dateInProperFormat = Consts.DATA_FORMAT.format(daysToTweetsMap.get(reverseKey).get(0).getCreatedAt());
-                stringBuilder.append(getExceptionMessage(dateInProperFormat));
-            }
+        for (Integer key : keys) {
+            stringBuilder.append(covidDayService.getFilledTemplate(daysToTweetsMap.get(key)));
         }
         return stringBuilder.toString();
-    }
-
-    String getExceptionMessage(String date) {
-        return date + "\n------------------------------------\n" + CANT_FIND_DATA_FOR_DAY_ERROR + "\n\n\n";
     }
 }
