@@ -6,7 +6,7 @@ SimpleCovidStats is a Twitter scrapper that gathers and displays info about COVI
 ## Use
 
 Application handles only one endpoint with parameter `/days/{days}` which specifies the number of days back the app should be run against (1 is only for today). Currently application is avaiable on covidsimple.pl
-![gif](https://github.com/gosu94/SimpleCovidStats/blob/master/scs.gif?raw=true)
+![gif](https://github.com/gosu94/SimpleCovidStats/blob/main/scs.gif?raw=true)
 
 ## Requirements
 
