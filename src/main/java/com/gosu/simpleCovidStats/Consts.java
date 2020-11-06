@@ -15,7 +15,7 @@ public class Consts {
             "Zgony: %d\n" +
             "Zgony z powodu chorób współistniejących: %d\n" +
             "Wykonanych testów: %.1f tys." + "\n\n\n";
-    public static final String ALL_CASES_TEMPLATE = "Liczba wszystkich zakażeń: %s\nLiczba wszystkich zgonów: %s\n\n\n";
+    public static final String ALL_CASES_TEMPLATE = "Liczba wszystkich zakażeń:%,8d\nLiczba wszystkich zgonów: %d\n\n\n";
     public static SimpleDateFormat DATA_FORMAT =
             new SimpleDateFormat("EEEE d MMMM yyyy", Locale.forLanguageTag("pl-PL"));
     public static final int MAX_DAYS = 14;
