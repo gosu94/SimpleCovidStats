@@ -35,20 +35,33 @@ public class CovidDayController {
         if (days > MAX_DAYS || days < MIN_DAYS) return stringBuilder.append(MAX_NUMBER_ERROR).toString();
 
         Set<Integer> keys = daysToTweetsMap.keySet();
-        try {
-            stringBuilder.append(
-                    String.format(ALL_CASES_TEMPLATE,
-                            covidDayService.getAllCases(daysToTweetsMap.get(0)),
-                            covidDayService.getAllDeaths(daysToTweetsMap.get(0))
-                    )
-            );
-        } catch (Exception ex) {
-            stringBuilder.append(ex.getMessage());
-        }
+        appendAllCasesFromTodayOrYesterday(stringBuilder, daysToTweetsMap);
 
         for (Integer key : keys) {
             stringBuilder.append(covidDayService.getFilledTemplate(daysToTweetsMap.get(key)));
         }
         return stringBuilder.toString();
+    }
+
+    private void appendAllCasesFromTodayOrYesterday(StringBuilder stringBuilder, TreeMap<Integer, List<Status>> daysToTweetsMap) {
+        try {
+            try {
+                stringBuilder.append(
+                        String.format(ALL_CASES_TEMPLATE,
+                                covidDayService.getAllCases(daysToTweetsMap.get(0)),
+                                covidDayService.getAllDeaths(daysToTweetsMap.get(0))
+                        )
+                );
+            }catch(Exception ex){
+                stringBuilder.append(
+                        String.format(ALL_CASES_TEMPLATE,
+                                covidDayService.getAllCases(daysToTweetsMap.get(1)),
+                                covidDayService.getAllDeaths(daysToTweetsMap.get(1))
+                        )
+                );
+            }
+        } catch (Exception ex) {
+            stringBuilder.append(ex.getMessage());
+        }
     }
 }
