@@ -52,7 +52,7 @@ public class CovidDayController {
                                 covidDayService.getAllDeaths(daysToTweetsMap.get(0))
                         )
                 );
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 stringBuilder.append(
                         String.format(ALL_CASES_TEMPLATE,
                                 covidDayService.getAllCases(daysToTweetsMap.get(1)),

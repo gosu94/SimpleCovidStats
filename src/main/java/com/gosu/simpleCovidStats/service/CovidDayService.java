@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.gosu.simpleCovidStats.Consts.COVID_DAY_TEMPLATE;
-import static com.gosu.simpleCovidStats.model.CovidDay.*;
+import static com.gosu.simpleCovidStats.model.CovidDay.CovidDayBuilder;
 
 @Component
 public class CovidDayService {
